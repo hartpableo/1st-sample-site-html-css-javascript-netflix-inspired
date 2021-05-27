@@ -10,19 +10,12 @@ toggleBtn.addEventListener('click',function() {
 const year = document.querySelector('.date');
 year.innerHTML = new Date().getFullYear();
 
-// fixed navbar and back-to-top button
-const navbar = document.querySelector('.navbar');
+// back-to-top button
 const backToTop = document.querySelector('.backToTop');
 
 window.addEventListener('scroll',function() {
-    const navHeight = navbar.getBoundingClientRect().height;
     const scrollHeight = window.pageYOffset;
-    if (scrollHeight > navHeight + 200) { // nav bar
-        navbar.classList.add('fixedNav');
-    } else {
-        navbar.classList.remove('fixedNav');
-    }
-
+    
     if (scrollHeight > 500) { // back to top
         backToTop.classList.add('showBackToTop');
     } else {
@@ -30,30 +23,11 @@ window.addEventListener('scroll',function() {
     }
 });
 
-// accurate navigation
+// close navbar after clicking a link
 const scrollLinks = document.querySelectorAll('.scrollLink');
 
 scrollLinks.forEach(function(link) {
     link.addEventListener('click',function(event) {
-        event.preventDefault(); // prevent default scroll behavior
-        const id = event.currentTarget.getAttribute('href').slice(1); // navigate to specific section id
-        const element = document.getElementById(id);
-        const navHeight = navbar.getBoundingClientRect().height;
-        const navContainerHeight = navLinks.getBoundingClientRect().height;
-        const fixedNav = navbar.classList.contains('fixedNav');
-        let position = element.offsetTop - navHeight;
-
-        if (!navHeight) {
-            position = position - navHeight;
-        };
-        if (navHeight > 82) {
-            position = position + navContainerHeight;
-        }
-
-        window.scrollTo({
-            left: 0,
-            top: position,
-        });
         navLinks.classList.remove('active'); // close nav links after clicking and navigating
     });
 });
